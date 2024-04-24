@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Colors } from "../../constants/colors";
 import ImagePicker from "./ImagePicker";
+import LocationPicker from "./LocationPicker";
 
 export default function PlaceForm() {
   const [enteredTitle, setEnteredTitle] = useState("");
@@ -18,7 +19,7 @@ export default function PlaceForm() {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.formContainer}>
       <View style={styles.form}>
         <Text style={styles.label}>Title</Text>
         <TextInput
@@ -28,11 +29,16 @@ export default function PlaceForm() {
         />
       </View>
       <ImagePicker />
+      <LocationPicker />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  formContainer: {
+    flex: 1,
+    padding: 24,
+  },
   form: {
     flex: 1,
   },
