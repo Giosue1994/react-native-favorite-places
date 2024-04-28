@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Colors } from "../../constants/colors";
 import OutlineButton from "../UI/OutlineButton";
 
-export default function ImagePicker() {
+export default function ImagePicker({ onTakeImage }) {
   const [pickedImage, setPickedImage] = useState();
 
   // autorizzazione fotocamera per ios //
@@ -50,6 +50,7 @@ export default function ImagePicker() {
     });
 
     setPickedImage(image.assets[0].uri);
+    onTakeImage(image.assets[0].uri);
   }
 
   let imagePreview = <Text>No image taken yet</Text>;
