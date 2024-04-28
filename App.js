@@ -11,6 +11,7 @@ import IconButton from "./components/UI/IconButton";
 
 import { Colors } from "./constants/colors";
 import { init } from "./util/database";
+import PlaceDetails from "./screens/PlaceDetails";
 
 const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
@@ -79,6 +80,13 @@ export default function App() {
             options={{ title: "Add a new Place" }}
           />
           <Stack.Screen name="Map" component={Map} />
+          <Stack.Screen
+            name="PlaceDetails"
+            component={PlaceDetails}
+            options={{
+              title: "Loading Places...",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
