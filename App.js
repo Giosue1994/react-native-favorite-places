@@ -1,21 +1,52 @@
+import { useEffect, useState, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import AllPlaces from "./screens/AllPlaces";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as SplashScreen from "expo-splash-screen";
 import AddPlace from "./screens/AddPlace";
 import Map from "./screens/Map";
 import IconButton from "./components/UI/IconButton";
 
 import { Colors } from "./constants/colors";
+import { init } from "./util/database";
 
 const Stack = createNativeStackNavigator();
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    const prepare = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        init();
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setDbInitialized(true);
+      }
+    };
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (dbInitialized) {
+      await SplashScreen.hideAsync();
+    }
+  }, [dbInitialized]);
+
+  if (!dbInitialized) {
+    return null;
+  }
+
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
+      <NavigationContainer onReady={onLayoutRootView}>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
