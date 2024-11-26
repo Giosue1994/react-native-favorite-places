@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import { Place } from "../models/place";
 
-const database = SQLite.openDatabase("places.db");
+const database = SQLite.openDatabaseSync("places.db");
 export function init() {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
